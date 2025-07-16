@@ -1,27 +1,16 @@
 #pragma once
 #include <unistd.h>
 
-#include <algorithm>
-#include <array>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <filesystem>
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <ranges>
-#include <sstream>
 #include <string>
-#include <variant>
-#include <vector>
 
 #include "metric.hpp"
 
 namespace analyser::metric::metric_impl {
 
 struct CodeLinesCountMetric final: IMetric {
-    // здесь ваш код
+protected:
+    virtual std::string Name() const override { return "Code lines count"; }
+    virtual MetricResult::ValueType CalculateImpl(const function::Function&) const override;
 };
 
 } // namespace analyser::metric::metric_impl
