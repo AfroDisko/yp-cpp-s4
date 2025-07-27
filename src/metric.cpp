@@ -2,33 +2,20 @@
 
 #include <unistd.h>
 
-#include <algorithm>
-#include <any>
-#include <array>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <filesystem>
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <ranges>
-#include <sstream>
-#include <string>
-#include <variant>
-#include <vector>
-
 #include "function.hpp"
 
 namespace analyser::metric {
 
 void MetricExtractor::RegisterMetric(std::unique_ptr<IMetric> metric) {
-    // здесь ваш код
+    metrics.push_back(std::move(metric));
 }
 
 MetricResults MetricExtractor::Get(const function::Function &func) const {
-    // здесь ваш код
-    return {};
+    auto calculate = [&func](const std::unique_ptr<IMetric>& metric) {
+        return metric->Calculate(func);
+    };
+
+    return std::ranges::to<MetricResults>(metrics | std::views::transform(calculate));
 }
 
 }  // namespace analyser::metric

@@ -17,7 +17,9 @@
 namespace analyser::metric::metric_impl {
 
 struct CountParametersMetric final: public IMetric {
-    // здесь ваш код
+protected:
+    virtual std::string Name() const override { return "Parameters count"; }
+    virtual MetricResult::ValueType CalculateImpl(const function::Function&) const override;
 };
 
 } // namespace analyser::metric::metric_impl
